@@ -1,2 +1,35 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<style>
+	.red { color: red; font-weight: bold; }
+	.green { color: darkgreen; font-weight: bold; }
+</style>
+
+<h1>Node Clipboard</h1>
+
+<div id="status" class="red">Not connected</div>
+
+<textarea rows="30" cols="100" id="clipboard"></textarea>
+
+<script src="javascripts/jquery.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	function onConnect() {
+		$("#status").removeClass("red").addClass("green").text("Connected");
+	}
+
+	function onDisconnect() {
+		$("#status").addClass("red").removeClass("green").text("Not connected");
+	}
+
+	var socket = io();
+	onConnect();
+	socket.on('disconnect', onDisconnect);
+
+	socket.on('change', function(data) {
+		$("#clipboard").val(data);
+	});
+		
+	$("#clipboard").change(function() {
+		socket.emit('change', $(this).val());
+	});
+
+</script>
