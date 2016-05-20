@@ -19,10 +19,14 @@
 	function onDisconnect() {
 		$("#status").addClass("red").removeClass("green").text("Not connected");
 	}
+	function init(data) {
+		$("#clipboard").val(data);
+	}
 
 	var socket = io();
 	onConnect();
 	socket.on('reconnect', onConnect);
+	socket.on('init', init);
 	socket.on('disconnect', onDisconnect);
 
 	socket.on('change', function(data) {

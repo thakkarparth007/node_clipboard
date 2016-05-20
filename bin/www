@@ -26,8 +26,11 @@ var io = require('socket.io')(server);
  * Listen on provided port, on all network interfaces.
  */
 
+var data = "";
 io.on('connection', function(socket) {
-	socket.on('change', function(data) {
+	socket.emit('init', data);
+	socket.on('change', function(d) {
+		data = d;
 		socket.broadcast.emit('change', data);
 	});
 });
