@@ -22,6 +22,7 @@
 
 	var socket = io();
 	onConnect();
+	socket.on('reconnect', onConnect);
 	socket.on('disconnect', onDisconnect);
 
 	socket.on('change', function(data) {
