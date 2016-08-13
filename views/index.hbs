@@ -33,7 +33,7 @@
 		$("#clipboard").val(data);
 	});
 		
-	$("#clipboard").change(function() {
+	$("#clipboard").on('input',function() {
 		socket.emit('change', $(this).val());
 	});
 
